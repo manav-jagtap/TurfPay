@@ -1,0 +1,19 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# PyCharm
+.idea/
+
+# Environment variables / secrets
+.env
+
+# Local database
+db.sqlite3
+
+# OS generated files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,38 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+{{ turf.name }} | TurfPay
+{% endblock %}
+
+{% block content %}
+
+<section class="turf-detail">
+
+    <h1>{{ turf.name }}</h1>
+
+    <p>{{ turf.location }}</p>
+    <p>₹{{ turf.price_per_hour }} / hour</p>
+
+    <h2>Available Slots</h2>
+
+    {% for slot in slots %}
+        <div class="slot">
+            <span>
+                {{ slot.date }} |
+                {{ slot.start_time }} - {{ slot.end_time }}
+            </span>
+
+            <form method="post" action="{% url 'book_slot' slot.id %}">
+                {% csrf_token %}
+                <button type="submit">Book Now</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No slots available.</p>
+    {% endfor %}
+
+    <a href="{% url 'turf_list' %}">← Back to Turfs</a>
+
+</section>
+
+{% endblock %}

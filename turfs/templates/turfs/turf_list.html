@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+Turfs | TurfPay
+{% endblock %}
+
+{% block content %}
+
+<section class="turf-list">
+    <h1>Available Turfs</h1>
+
+    {% for turf in turfs %}
+        <div class="turf-card">
+            <h2>
+                 <a href="{% url 'turf_detail' turf.pk %}">
+                      {{ turf.name }}
+                 </a>
+            </h2>
+            <p>{{ turf.location }}</p>
+            <p>₹{{ turf.price_per_hour }} / hour</p>
+        </div>
+    {% empty %}
+        <p>No turfs available.</p>
+    {% endfor %}
+</section>
+
+{% endblock %}
