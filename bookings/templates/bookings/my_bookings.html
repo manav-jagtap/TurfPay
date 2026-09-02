@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+My Bookings | TurfPay
+{% endblock %}
+
+{% block content %}
+
+<section class="turf-list">
+    <h1>My Bookings</h1>
+
+    {% for booking in bookings %}
+    <div class="turf-card">
+        <h2>{{ booking.slot.turf.name }}</h2>
+
+        <p>{{ booking.slot.date }}</p>
+
+        <p>
+            {{ booking.slot.start_time }} -
+            {{ booking.slot.end_time }}
+        </p>
+
+        <form method="post" action="{% url 'cancel_booking' booking.id %}">
+            {% csrf_token %}
+            <button type="submit">Cancel Booking</button>
+        </form>
+    </div>
+{% empty %}
+    <p>No bookings yet.</p>
+{% endfor %}
+</section>
+
+{% endblock %}

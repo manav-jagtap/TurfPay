@@ -24,7 +24,7 @@
         <nav class="nav-links">
     <a href="{% url 'home' %}">Home</a>
     <a href="{% url 'turf_list' %}">Turfs</a>
-    <a href="#">Bookings</a>
+    <a href="{% url 'my_bookings' %}">Bookings</a>
 
     {% if user.is_authenticated %}
         <span>{{ user.username }}</span>
