@@ -1,0 +1,48 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+Owner Dashboard | TurfPay
+{% endblock %}
+
+{% block content %}
+
+<section class="turf-list">
+
+    <h1>Owner Dashboard</h1>
+
+    <p>
+        <a href="{% url 'owner_bookings' %}">
+            View Bookings
+        </a>
+    </p>
+
+    {% for turf in turfs %}
+
+        <div class="turf-card">
+
+            <h2>{{ turf.name }}</h2>
+
+            <p>{{ turf.location }}</p>
+
+            <p>₹{{ turf.price_per_hour }} / hour</p>
+
+            <p>Slots: {{ turf.slots.count }}</p>
+
+            <a href="{% url 'add_slot' turf.id %}">
+                Add Slot
+            </a>
+            <a href="{% url 'manage_slots' turf.id %}">
+                  Manage Slots
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <p>No turfs assigned.</p>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}

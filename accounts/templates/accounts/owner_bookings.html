@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+Owner Bookings | TurfPay
+{% endblock %}
+
+{% block content %}
+
+<section class="turf-list">
+
+    <h1>Turf Bookings</h1>
+
+    {% for booking in bookings %}
+
+        <div class="turf-card">
+
+            <h2>{{ booking.slot.turf.name }}</h2>
+
+            <p>Customer: {{ booking.user.username }}</p>
+
+            <p>Date: {{ booking.slot.date }}</p>
+
+            <p>
+                Time:
+                {{ booking.slot.start_time }}
+                -
+                {{ booking.slot.end_time }}
+            </p>
+
+            <p>Status: {{ booking.get_status_display }}</p>
+
+        </div>
+
+    {% empty %}
+
+        <p>No bookings yet.</p>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}
