@@ -7,27 +7,49 @@ My Bookings | TurfPay
 {% block content %}
 
 <section class="turf-list">
+
     <h1>My Bookings</h1>
 
     {% for booking in bookings %}
-    <div class="turf-card">
-        <h2>{{ booking.slot.turf.name }}</h2>
 
-        <p>{{ booking.slot.date }}</p>
+        <div class="turf-card">
 
-        <p>
-            {{ booking.slot.start_time }} -
-            {{ booking.slot.end_time }}
-        </p>
+            <h2>{{ booking.slot.turf.name }}</h2>
 
-        <form method="post" action="{% url 'cancel_booking' booking.id %}">
-            {% csrf_token %}
-            <button type="submit">Cancel Booking</button>
-        </form>
-    </div>
-{% empty %}
-    <p>No bookings yet.</p>
-{% endfor %}
+            <p>{{ booking.slot.date }}</p>
+
+            <p>
+                {{ booking.slot.start_time }}
+                -
+                {{ booking.slot.end_time }}
+            </p>
+
+            <p>
+                Status: {{ booking.get_status_display }}
+            </p>
+
+            {% if booking.status == "confirmed" %}
+
+                <form
+                    method="post"
+                    action="{% url 'cancel_booking' booking.id %}"
+                >
+                    {% csrf_token %}
+                    <button type="submit">
+                        Cancel Booking
+                    </button>
+                </form>
+
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+
+        <p>No bookings yet.</p>
+
+    {% endfor %}
+
 </section>
 
 {% endblock %}
