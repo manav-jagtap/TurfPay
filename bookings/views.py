@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
@@ -24,9 +25,12 @@ def book_slot(request, slot_id):
         )
 
         slot.is_available = False
-        slot.save(
-            update_fields=["is_available"]
-        )
+        slot.save(update_fields=["is_available"])
+
+    messages.success(
+        request,
+        "Booking confirmed successfully.",
+    )
 
     return redirect("my_bookings")
 
@@ -63,13 +67,16 @@ def cancel_booking(request, booking_id):
 
     if request.method == "POST":
         booking.status = "cancelled"
-        booking.save(
-            update_fields=["status"]
-        )
+        booking.save(update_fields=["status"])
 
         booking.slot.is_available = True
         booking.slot.save(
             update_fields=["is_available"]
+        )
+
+        messages.success(
+            request,
+            "Booking cancelled successfully.",
         )
 
     return redirect("my_bookings")
