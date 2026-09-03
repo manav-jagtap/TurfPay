@@ -1,7 +1,16 @@
+from django.conf import settings
 from django.db import models
 
 
 class Turf(models.Model):
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="owned_turfs",
+        null=True,
+        blank=True,
+    )
+
     name = models.CharField(max_length=120)
     location = models.CharField(max_length=200)
     price_per_hour = models.PositiveIntegerField()
@@ -15,8 +24,9 @@ class Slot(models.Model):
     turf = models.ForeignKey(
         Turf,
         on_delete=models.CASCADE,
-        related_name="slots"
+        related_name="slots",
     )
+
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()

@@ -1,0 +1,66 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+Manage Slots | TurfPay
+{% endblock %}
+
+{% block content %}
+
+<section class="turf-list">
+
+    <h1>Manage Slots</h1>
+
+    <h2>{{ turf.name }}</h2>
+
+    <p>
+        <a href="{% url 'add_slot' turf.id %}">
+            Add Slot
+        </a>
+    </p>
+
+    {% for slot in slots %}
+
+        <div class="turf-card">
+
+            <p>{{ slot.date }}</p>
+
+            <p>
+                {{ slot.start_time }}
+                -
+                {{ slot.end_time }}
+            </p>
+
+            <p>
+                {% if slot.is_available %}
+                    Available
+                {% else %}
+                    Booked / Unavailable
+                {% endif %}
+            </p>
+
+            {% if slot.is_available and not slot.booking_set.exists %}
+
+                <form
+                    method="post"
+                    action="{% url 'delete_slot' slot.id %}"
+                >
+                    {% csrf_token %}
+
+                    <button type="submit">
+                        Delete Slot
+                    </button>
+                </form>
+
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+
+        <p>No slots added yet.</p>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}
