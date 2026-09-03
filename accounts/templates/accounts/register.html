@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+Register | TurfPay
+{% endblock %}
+
+{% block content %}
+
+<section class="turf-list">
+    <h1>Create Account</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p>
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+</section>
+
+{% endblock %}
