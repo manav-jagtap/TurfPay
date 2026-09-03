@@ -81,7 +81,13 @@
     </div>
 
 </header>
-
+{% if messages %}
+    <section class="turf-list">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </section>
+{% endif %}
 
 <main>
     {% block content %}
