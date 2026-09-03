@@ -7,21 +7,101 @@ Turfs | TurfPay
 {% block content %}
 
 <section class="turf-list">
+
     <h1>Available Turfs</h1>
 
+    <form method="get" class="search-form">
+
+        <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            placeholder="Search turf or location"
+        >
+
+        <select name="sport">
+
+            <option value="">
+                All Sports
+            </option>
+
+            <option
+                value="cricket"
+                {% if sport == "cricket" %}selected{% endif %}
+            >
+                Cricket
+            </option>
+
+            <option
+                value="football"
+                {% if sport == "football" %}selected{% endif %}
+            >
+                Football
+            </option>
+
+            <option
+                value="multi"
+                {% if sport == "multi" %}selected{% endif %}
+            >
+                Multi-sport
+            </option>
+
+        </select>
+
+        <input
+            type="number"
+            name="max_price"
+            value="{{ max_price }}"
+            placeholder="Max price"
+            min="0"
+        >
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
     {% for turf in turfs %}
+
         <div class="turf-card">
+
+            {% if turf.image %}
+
+                <img
+                    src="{{ turf.image.url }}"
+                    alt="{{ turf.name }}"
+                    class="turf-image"
+                >
+
+            {% endif %}
+
             <h2>
-                 <a href="{% url 'turf_detail' turf.pk %}">
-                      {{ turf.name }}
-                 </a>
+                <a href="{% url 'turf_detail' turf.pk %}">
+                    {{ turf.name }}
+                </a>
             </h2>
-            <p>{{ turf.location }}</p>
-            <p>₹{{ turf.price_per_hour }} / hour</p>
+
+            <p>
+                {{ turf.location }}
+            </p>
+
+            <p>
+                {{ turf.get_sport_type_display }}
+            </p>
+
+            <p>
+                ₹{{ turf.price_per_hour }} / hour
+            </p>
+
         </div>
+
     {% empty %}
-        <p>No turfs available.</p>
+
+        <p>No turfs found.</p>
+
     {% endfor %}
+
 </section>
 
 {% endblock %}

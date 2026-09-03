@@ -8,15 +8,34 @@
 
 <section class="turf-detail">
 
+    {% if turf.image %}
+        <img
+            src="{{ turf.image.url }}"
+            alt="{{ turf.name }}"
+            class="turf-detail-image"
+        >
+    {% endif %}
+
     <h1>{{ turf.name }}</h1>
 
     <p>{{ turf.location }}</p>
+
+    <p>
+        Sport: {{ turf.get_sport_type_display }}
+    </p>
+
+    {% if turf.description %}
+        <p>{{ turf.description }}</p>
+    {% endif %}
+
     <p>₹{{ turf.price_per_hour }} / hour</p>
 
     <h2>Available Slots</h2>
 
     {% for slot in slots %}
+
         <div class="slot">
+
             <span>
                 {{ slot.date }} |
                 {{ slot.start_time }} - {{ slot.end_time }}
@@ -26,12 +45,18 @@
                 {% csrf_token %}
                 <button type="submit">Book Now</button>
             </form>
+
         </div>
+
     {% empty %}
+
         <p>No slots available.</p>
+
     {% endfor %}
 
-    <a href="{% url 'turf_list' %}">← Back to Turfs</a>
+    <a href="{% url 'turf_list' %}">
+        ← Back to Turfs
+    </a>
 
 </section>
 
