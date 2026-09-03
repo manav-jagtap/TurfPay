@@ -11,6 +11,12 @@ Owner Dashboard | TurfPay
     <h1>Owner Dashboard</h1>
 
     <p>
+        <a href="{% url 'add_turf' %}">
+            Add Turf
+        </a>
+    </p>
+
+    <p>
         <a href="{% url 'owner_bookings' %}">
             View Bookings
         </a>
@@ -24,22 +30,39 @@ Owner Dashboard | TurfPay
 
             <p>{{ turf.location }}</p>
 
-            <p>₹{{ turf.price_per_hour }} / hour</p>
+            <p>
+                {{ turf.get_sport_type_display }}
+            </p>
 
-            <p>Slots: {{ turf.slots.count }}</p>
+            <p>
+                ₹{{ turf.price_per_hour }} / hour
+            </p>
+
+            <p>
+                Slots: {{ turf.slots.count }}
+            </p>
+
+            <a href="{% url 'edit_turf' turf.id %}">
+                Edit Turf
+            </a>
+
+            <br><br>
 
             <a href="{% url 'add_slot' turf.id %}">
                 Add Slot
             </a>
+
+            <br>
+
             <a href="{% url 'manage_slots' turf.id %}">
-                  Manage Slots
+                Manage Slots
             </a>
 
         </div>
 
     {% empty %}
 
-        <p>No turfs assigned.</p>
+        <p>No turfs added yet.</p>
 
     {% endfor %}
 

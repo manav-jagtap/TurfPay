@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
-from .forms import SlotForm
+from .forms import SlotForm, TurfForm
 from .models import Slot, Turf
 
 
@@ -70,6 +70,65 @@ def turf_detail(request, pk):
         {
             "turf": turf,
             "slots": slots,
+        },
+    )
+
+
+@login_required
+def add_turf(request):
+    if (
+        not request.user.owned_turfs.exists()
+        and not request.user.is_superuser
+    ):
+        return redirect("home")
+
+    form = TurfForm(
+        request.POST or None,
+        request.FILES or None,
+    )
+
+    if request.method == "POST" and form.is_valid():
+        turf = form.save(commit=False)
+        turf.owner = request.user
+        turf.save()
+
+        return redirect("owner_dashboard")
+
+    return render(
+        request,
+        "turfs/turf_form.html",
+        {
+            "form": form,
+            "title": "Add Turf",
+        },
+    )
+
+
+@login_required
+def edit_turf(request, turf_id):
+    turf = get_object_or_404(
+        Turf,
+        pk=turf_id,
+        owner=request.user,
+    )
+
+    form = TurfForm(
+        request.POST or None,
+        request.FILES or None,
+        instance=turf,
+    )
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("owner_dashboard")
+
+    return render(
+        request,
+        "turfs/turf_form.html",
+        {
+            "form": form,
+            "title": "Edit Turf",
+            "turf": turf,
         },
     )
 
