@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+{{ title }} | TurfPay
+{% endblock %}
+
+{% block content %}
+
+<section class="turf-list">
+
+    <h1>{{ title }}</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            {{ title }}
+        </button>
+    </form>
+
+</section>
+
+{% endblock %}
