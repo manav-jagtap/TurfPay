@@ -1,23 +1,65 @@
 from django.contrib.auth.decorators import login_required
+from django.db import models
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import SlotForm
-from .models import Turf
 from .models import Slot, Turf
 
+
 def turf_list(request):
+    query = request.GET.get("q", "").strip()
+    sport = request.GET.get("sport", "").strip()
+    max_price = request.GET.get("max_price", "").strip()
+
     turfs = Turf.objects.filter(is_active=True)
-    return render(request, "turfs/turf_list.html", {"turfs": turfs})
+
+    if query:
+        turfs = turfs.filter(
+            models.Q(name__icontains=query)
+            | models.Q(location__icontains=query)
+        )
+
+    if sport:
+        turfs = turfs.filter(sport_type=sport)
+
+    if max_price.isdigit():
+        turfs = turfs.filter(
+            price_per_hour__lte=int(max_price)
+        )
+
+    return render(
+        request,
+        "turfs/turf_list.html",
+        {
+            "turfs": turfs,
+            "query": query,
+            "sport": sport,
+            "max_price": max_price,
+        },
+    )
 
 
 def turf_detail(request, pk):
-    turf = get_object_or_404(Turf, pk=pk, is_active=True)
-    slots = turf.slots.filter(is_available=True).order_by("date", "start_time")
+    turf = get_object_or_404(
+        Turf,
+        pk=pk,
+        is_active=True,
+    )
+
+    slots = turf.slots.filter(
+        is_available=True
+    ).order_by(
+        "date",
+        "start_time",
+    )
 
     return render(
         request,
         "turfs/turf_detail.html",
-        {"turf": turf, "slots": slots},
+        {
+            "turf": turf,
+            "slots": slots,
+        },
     )
 
 
@@ -36,13 +78,20 @@ def add_slot(request, turf_id):
         slot.turf = turf
         slot.save()
 
-        return redirect("owner_dashboard")
+        return redirect(
+            "manage_slots",
+            turf_id=turf.id,
+        )
 
     return render(
         request,
         "turfs/add_slot.html",
-        {"form": form, "turf": turf},
+        {
+            "form": form,
+            "turf": turf,
+        },
     )
+
 
 @login_required
 def manage_slots(request, turf_id):
@@ -52,13 +101,20 @@ def manage_slots(request, turf_id):
         owner=request.user,
     )
 
-    slots = turf.slots.all().order_by("date", "start_time")
+    slots = turf.slots.all().order_by(
+        "date",
+        "start_time",
+    )
 
     return render(
         request,
         "turfs/manage_slots.html",
-        {"turf": turf, "slots": slots},
+        {
+            "turf": turf,
+            "slots": slots,
+        },
     )
+
 
 @login_required
 def delete_slot(request, slot_id):
@@ -71,7 +127,13 @@ def delete_slot(request, slot_id):
 
     turf_id = slot.turf_id
 
-    if request.method == "POST" and not slot.booking_set.exists():
+    if (
+        request.method == "POST"
+        and not slot.booking_set.exists()
+    ):
         slot.delete()
 
-    return redirect("manage_slots", turf_id=turf_id)
+    return redirect(
+        "manage_slots",
+        turf_id=turf_id,
+    )
