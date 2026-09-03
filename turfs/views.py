@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.db import models
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 
 from .forms import SlotForm
 from .models import Slot, Turf
@@ -15,8 +16,8 @@ def turf_list(request):
 
     if query:
         turfs = turfs.filter(
-            models.Q(name__icontains=query)
-            | models.Q(location__icontains=query)
+            Q(name__icontains=query)
+            | Q(location__icontains=query)
         )
 
     if sport:
@@ -46,8 +47,18 @@ def turf_detail(request, pk):
         is_active=True,
     )
 
+    now = timezone.localtime()
+    today = now.date()
+    current_time = now.time().replace(tzinfo=None)
+
     slots = turf.slots.filter(
-        is_available=True
+        is_available=True,
+    ).filter(
+        Q(date__gt=today)
+        | Q(
+            date=today,
+            start_time__gt=current_time,
+        )
     ).order_by(
         "date",
         "start_time",
