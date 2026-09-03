@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'core',
     'turfs',
     'bookings',
+    'accounts',
 ]
 
 MIDDLEWARE = [
