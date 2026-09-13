@@ -4,16 +4,25 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}TurfPay{% endblock %}</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}TurfPay{% endblock %}
+    </title>
 
     <link
         rel="stylesheet"
         href="{% static 'core/css/style.css' %}"
     >
+
 </head>
+
 
 <body>
 
@@ -22,10 +31,13 @@
     <div class="navbar-container">
 
         <div class="logo">
+
             <a href="{% url 'home' %}">
-                TurfPay
+                Turf<span>Pay</span>
             </a>
+
         </div>
+
 
         <nav class="nav-links">
 
@@ -34,22 +46,24 @@
             </a>
 
             <a href="{% url 'turf_list' %}">
-                Turfs
+                Explore Turfs
             </a>
+
 
             {% if user.is_authenticated %}
 
                 <a href="{% url 'my_bookings' %}">
-                    Bookings
+                    My Bookings
                 </a>
 
                 {% if user.owned_turfs.exists or user.is_superuser %}
                     <a href="{% url 'owner_dashboard' %}">
-                        Owner Dashboard
+                        Dashboard
                     </a>
                 {% endif %}
 
-                <span>
+
+                <span class="nav-user">
                     {{ user.username }}
                 </span>
 
@@ -57,11 +71,16 @@
                     method="post"
                     action="{% url 'logout' %}"
                 >
+
                     {% csrf_token %}
 
-                    <button type="submit">
+                    <button
+                        type="submit"
+                        class="nav-logout"
+                    >
                         Logout
                     </button>
+
                 </form>
 
             {% else %}
@@ -70,7 +89,10 @@
                     Login
                 </a>
 
-                <a href="{% url 'register' %}">
+                <a
+                    href="{% url 'register' %}"
+                    class="nav-register"
+                >
                     Register
                 </a>
 
@@ -81,25 +103,77 @@
     </div>
 
 </header>
+
+
 {% if messages %}
-    <section class="turf-list">
+
+    <div class="message-container">
+
         {% for message in messages %}
-            <p>{{ message }}</p>
+
+            <div class="message">
+                {{ message }}
+            </div>
+
         {% endfor %}
-    </section>
+
+    </div>
+
 {% endif %}
 
+
 <main>
+
     {% block content %}
     {% endblock %}
+
 </main>
 
 
 <footer class="footer">
-    <p>
+
+    <div class="footer-inner">
+
+        <div>
+
+            <div class="footer-logo">
+                Turf<span>Pay</span>
+            </div>
+
+            <p>
+                Discover and book sports turfs across Latur.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'turf_list' %}">
+                Turfs
+            </a>
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
         © 2026 TurfPay. All rights reserved.
-    </p>
+
+    </div>
+
 </footer>
+
 
 </body>
 
