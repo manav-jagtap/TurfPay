@@ -1,20 +1,27 @@
 {% extends "core/base.html" %}
 
-{% block title %}
-Login | TurfPay
-{% endblock %}
+{% block title %}Login | TurfPay{% endblock %}
 
 {% block content %}
+<section class="tp-auth-section">
+    <div class="tp-auth-card">
+        <p class="tp-kicker tp-kicker-dark">Welcome back</p>
+        <h1>Login to TurfPay</h1>
 
-<section class="turf-list">
-    <h1>Login</h1>
+        {% if form.errors %}
+            <div class="tp-message error">Username or password is incorrect.</div>
+        {% endif %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+        <form method="post" class="tp-auth-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="tp-btn tp-btn-primary tp-full">Login</button>
+        </form>
 
-        <button type="submit">Login</button>
-    </form>
+        <div class="tp-auth-links">
+            <a href="{% url 'password_reset' %}">Forgot password?</a>
+            <a href="{% url 'register' %}">Create customer account</a>
+        </div>
+    </div>
 </section>
-
 {% endblock %}

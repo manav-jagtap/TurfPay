@@ -1,66 +1,53 @@
 {% extends "core/base.html" %}
 
-{% block title %}
-Manage Slots | TurfPay
-{% endblock %}
+{% block title %}Manage Slots | TurfPay{% endblock %}
 
 {% block content %}
+<section class="page narrow">
 
-<section class="turf-list">
-
-    <h1>Manage Slots</h1>
-
-    <h2>{{ turf.name }}</h2>
-
-    <p>
-        <a href="{% url 'add_slot' turf.id %}">
-            Add Slot
-        </a>
-    </p>
-
-    {% for slot in slots %}
-
-        <div class="turf-card">
-
-            <p>{{ slot.date }}</p>
-
-            <p>
-                {{ slot.start_time }}
-                -
-                {{ slot.end_time }}
-            </p>
-
-            <p>
-                {% if slot.is_available %}
-                    Available
-                {% else %}
-                    Booked / Unavailable
-                {% endif %}
-            </p>
-
-            {% if slot.is_available and not slot.booking_set.exists %}
-
-                <form
-                    method="post"
-                    action="{% url 'delete_slot' slot.id %}"
-                >
-                    {% csrf_token %}
-
-                    <button type="submit">
-                        Delete Slot
-                    </button>
-                </form>
-
-            {% endif %}
-
+    <div class="dashboard-head">
+        <div>
+            <span class="eyebrow">SLOT MANAGEMENT</span>
+            <h1>{{ turf.name }}</h1>
+            <p>Manage upcoming playing slots.</p>
         </div>
 
-    {% empty %}
+        <a href="{% url 'add_slot' turf.id %}" class="btn primary">Add Slot</a>
+    </div>
 
-        <p>No slots added yet.</p>
+    <div class="booking-list">
+        {% for slot in slots %}
+            <article class="booking-card">
+                <div>
+                    <span class="location">{{ slot.date|date:"D, d M Y" }}</span>
+                    <h2>
+                        {{ slot.start_time|time:"g:i A" }}
+                        -
+                        {{ slot.end_time|time:"g:i A" }}
+                    </h2>
+                    <div class="booking-meta">
+                        {% if slot.is_available %}
+                            <span>Available</span>
+                        {% else %}
+                            <span>Booked / unavailable</span>
+                        {% endif %}
+                    </div>
+                </div>
 
-    {% endfor %}
+                {% if slot.is_available %}
+                    <form method="post" action="{% url 'delete_slot' slot.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="danger-btn">Delete</button>
+                    </form>
+                {% endif %}
+            </article>
+        {% empty %}
+            <div class="empty">
+                <h2>No slots added yet</h2>
+                <p>Add the first available playing slot.</p>
+            </div>
+        {% endfor %}
+    </div>
 
 </section>
-
 {% endblock %}

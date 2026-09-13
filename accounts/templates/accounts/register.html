@@ -1,25 +1,27 @@
 {% extends "core/base.html" %}
 
-{% block title %}
-Register | TurfPay
-{% endblock %}
+{% block title %}Register | TurfPay{% endblock %}
 
 {% block content %}
+<section class="auth-page">
+    <div class="auth-card">
+        <span class="eyebrow">JOIN TURFPAY</span>
+        <h1>Create your account</h1>
+        <p>Register as a customer and start booking turfs.</p>
 
-<section class="turf-list">
-    <h1>Create Account</h1>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {{ form.as_p }}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+            <button type="submit" class="btn primary full-btn">
+                Create Account
+            </button>
+        </form>
 
-        <button type="submit">Register</button>
-    </form>
-
-    <p>
-        Already have an account?
-        <a href="{% url 'login' %}">Login</a>
-    </p>
+        <div class="auth-bottom">
+            Already registered?
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
 </section>
-
 {% endblock %}

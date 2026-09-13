@@ -1,0 +1,2539 @@
+/* =========================================================
+   TURFPAY - FINAL UI POLISH
+   ========================================================= */
+
+:root {
+    --tp-dark: #021109;
+    --tp-dark-soft: #061b10;
+    --tp-green: #2ddd68;
+    --tp-green-dark: #159447;
+    --tp-light-green: #65ed92;
+
+    --tp-white: #ffffff;
+
+    --tp-text-light: #d9e5dc;
+    --tp-text-muted: #9fb1a5;
+
+    --tp-page-bg: #f5f8f6;
+
+    --tp-border-light: #dce7e0;
+
+    --tp-container: 1180px;
+}
+
+
+/* =========================================================
+   GENERAL
+   ========================================================= */
+
+.tp-container {
+    width: min(
+        var(--tp-container),
+        calc(100% - 36px)
+    );
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* =========================================================
+   NAVBAR / BRAND
+   ========================================================= */
+
+.tp-header {
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+
+    background:
+        rgba(2, 17, 9, 0.97);
+
+    border-bottom:
+        1px solid rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    backdrop-filter:
+        blur(16px);
+}
+
+
+.tp-nav {
+    min-height: 76px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 24px;
+}
+
+
+.tp-brand {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    text-decoration: none;
+}
+
+
+.tp-logo-mark {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 15px;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #35e875,
+            #129545
+        );
+
+    color: #04150a;
+
+    font-weight: 900;
+
+    font-size: 16px;
+
+    letter-spacing: -0.04em;
+
+    box-shadow:
+        0 10px 30px
+        rgba(
+            33,
+            210,
+            94,
+            0.26
+        );
+}
+
+
+.tp-brand-copy strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.03em;
+}
+
+
+.tp-brand-copy small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #81988a;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.09em;
+}
+
+
+.tp-nav-links {
+    display: flex;
+
+    align-items: center;
+
+    gap: 19px;
+}
+
+
+.tp-nav-links > a {
+    color: #edf6ef;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 650;
+}
+
+
+.tp-nav-links > a:hover {
+    color: var(--tp-green);
+}
+
+
+.tp-user {
+    color: #4ade80;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+.tp-inline-form {
+    margin: 0;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.tp-btn {
+    min-height: 46px;
+
+    padding-left: 19px;
+    padding-right: 19px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 0;
+
+    border-radius: 13px;
+
+    text-decoration: none;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        background-color 0.18s ease,
+        border-color 0.18s ease;
+}
+
+
+.tp-btn:hover {
+    transform:
+        translateY(-1px);
+}
+
+
+.tp-btn-primary {
+    background:
+        linear-gradient(
+            135deg,
+            #30e56d,
+            #1cb956
+        );
+
+    color: #04150b;
+}
+
+
+.tp-btn-primary:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #3eee79,
+            #18a84d
+        );
+}
+
+
+.tp-btn-dark {
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.09
+        );
+
+    color: #ffffff;
+}
+
+
+.tp-btn-outline {
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.24
+        );
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.06
+        );
+
+    color: #ffffff;
+}
+
+
+.tp-btn-small {
+    min-height: 38px;
+
+    padding-left: 14px;
+    padding-right: 14px;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FULL SCREEN HOME HERO
+   ========================================================= */
+
+.tp-hero-full {
+    position: relative;
+
+    width: 100%;
+
+    min-height:
+        calc(
+            100vh - 76px
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    background-repeat:
+        no-repeat;
+
+    background-size:
+        cover;
+
+    background-position:
+        center center;
+
+    color: #ffffff;
+}
+
+
+/*
+   Extra light glow.
+   Keeps actual turf image visible
+   but gives professional green finish.
+*/
+
+.tp-hero-glow {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(
+                42,
+                220,
+                105,
+                0.15
+            ),
+            transparent 34%
+        );
+}
+
+
+.tp-hero-full-grid {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(360px, 0.8fr);
+
+    align-items: center;
+
+    gap: 72px;
+
+    padding-top: 80px;
+
+    padding-bottom: 80px;
+}
+
+
+/* =========================================================
+   HERO LEFT
+   ========================================================= */
+
+.tp-hero-main {
+    max-width: 720px;
+}
+
+
+.tp-kicker {
+    margin: 0 0 14px;
+
+    color: #52e987;
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.18em;
+}
+
+
+.tp-kicker-green {
+    color: #168941;
+}
+
+
+.tp-hero-main h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            48px,
+            6vw,
+            78px
+        );
+
+    line-height: 0.99;
+
+    font-weight: 850;
+
+    letter-spacing: -0.055em;
+}
+
+
+.tp-hero-main h1 span {
+    color:
+        #2be06a;
+}
+
+
+.tp-hero-description {
+    max-width: 650px;
+
+    margin:
+        24px 0 28px;
+
+    color:
+        rgba(
+            235,
+            245,
+            238,
+            0.84
+        );
+
+    font-size: 17px;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   HERO SEARCH
+   ========================================================= */
+
+.tp-hero-search {
+    width: 100%;
+
+    max-width: 700px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 7px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.14
+        );
+
+    border-radius: 17px;
+
+    background:
+        rgba(
+            5,
+            28,
+            16,
+            0.78
+        );
+
+    backdrop-filter:
+        blur(12px);
+
+    box-shadow:
+        0 14px 38px
+        rgba(
+            0,
+            0,
+            0,
+            0.20
+        );
+}
+
+
+.tp-hero-search input {
+    flex: 1;
+
+    min-width: 0;
+
+    min-height: 50px;
+
+    padding:
+        0 14px;
+
+    border: 0;
+
+    outline: 0;
+
+    background:
+        transparent;
+
+    color:
+        #ffffff;
+
+    font-size:
+        15px;
+}
+
+
+.tp-hero-search input::placeholder {
+    color:
+        rgba(
+            220,
+            235,
+            224,
+            0.58
+        );
+}
+
+
+.tp-hero-buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 17px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   QUICK BOOKING CARD
+   ========================================================= */
+
+.tp-hero-booking-card {
+    padding: 30px;
+
+    border:
+        1px solid
+        rgba(
+            69,
+            232,
+            126,
+            0.25
+        );
+
+    border-radius: 25px;
+
+    background:
+        rgba(
+            5,
+            31,
+            17,
+            0.78
+        );
+
+    backdrop-filter:
+        blur(16px);
+
+    box-shadow:
+        0 28px 70px
+        rgba(
+            0,
+            0,
+            0,
+            0.28
+        );
+}
+
+
+.tp-card-heading {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 16px;
+}
+
+
+.tp-card-heading h2 {
+    margin:
+        0 0 24px;
+
+    max-width:
+        360px;
+
+    color: #ffffff;
+
+    font-size: 29px;
+
+    line-height: 1.25;
+
+    letter-spacing:
+        -0.03em;
+}
+
+
+.tp-live-dot {
+    width: 10px;
+
+    height: 10px;
+
+    margin-top: 5px;
+
+    border-radius: 50%;
+
+    background:
+        #31df6f;
+
+    box-shadow:
+        0 0 0 6px
+        rgba(
+            49,
+            223,
+            111,
+            0.11
+        );
+}
+
+
+.tp-booking-step {
+    display: grid;
+
+    grid-template-columns:
+        44px 1fr;
+
+    gap: 14px;
+
+    align-items: start;
+
+    padding:
+        17px 0;
+
+    border-top:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.10
+        );
+}
+
+
+.tp-step-number {
+    width: 35px;
+
+    height: 35px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 10px;
+
+    background:
+        rgba(
+            38,
+            220,
+            101,
+            0.15
+        );
+
+    color: #55e886;
+
+    font-size: 11px;
+
+    font-weight: 900;
+}
+
+
+.tp-booking-step strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 14px;
+}
+
+
+.tp-booking-step p {
+    margin:
+        6px 0 0;
+
+    color:
+        #a8bcae;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   HOME FEATURES
+   ========================================================= */
+
+.tp-home-section {
+    padding:
+        80px 0;
+
+    background:
+        #f5f8f6;
+}
+
+
+.tp-home-title {
+    margin: 0;
+
+    color: #0b1c12;
+
+    font-size:
+        clamp(
+            31px,
+            4vw,
+            43px
+        );
+
+    letter-spacing:
+        -0.03em;
+}
+
+
+.tp-home-subtitle {
+    margin:
+        12px 0 0;
+
+    color:
+        #617267;
+
+    line-height:
+        1.65;
+}
+
+
+.tp-home-features {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap: 20px;
+
+    margin-top:
+        34px;
+}
+
+
+.tp-home-feature {
+    padding: 28px;
+
+    border:
+        1px solid
+        #dce7e0;
+
+    border-radius:
+        22px;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 14px 36px
+        rgba(
+            8,
+            36,
+            19,
+            0.05
+        );
+}
+
+
+.tp-feature-number {
+    width: 36px;
+
+    height: 36px;
+
+    margin-bottom:
+        18px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius:
+        10px;
+
+    background:
+        #e5f8eb;
+
+    color:
+        #13803a;
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+}
+
+
+.tp-home-feature h3 {
+    margin:
+        0 0 10px;
+
+    color:
+        #112117;
+
+    font-size:
+        19px;
+}
+
+
+.tp-home-feature p {
+    margin: 0;
+
+    color:
+        #607167;
+
+    line-height:
+        1.68;
+}
+
+
+/* =========================================================
+   TURF DETAILS
+   Existing final detail design
+   ========================================================= */
+
+.tp-detail-section {
+    padding:
+        44px 0 80px;
+
+    background:
+        #f5f8f6;
+}
+
+
+.tp-detail-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(
+            0,
+            1.1fr
+        )
+        minmax(
+            350px,
+            0.72fr
+        );
+
+    gap: 24px;
+
+    align-items: start;
+}
+
+
+.tp-detail-card,
+.tp-booking-panel,
+.tp-auth-card {
+    border:
+        1px solid
+        #dce7e0;
+
+    border-radius:
+        24px;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 18px 44px
+        rgba(
+            7,
+            35,
+            18,
+            0.07
+        );
+}
+
+
+.tp-detail-card {
+    padding: 24px;
+}
+
+
+.tp-detail-image {
+    overflow: hidden;
+
+    margin-bottom:
+        25px;
+
+    border-radius:
+        19px;
+
+    background:
+        #e6eee9;
+}
+
+
+.tp-detail-image img {
+    width: 100%;
+
+    aspect-ratio:
+        16 / 9;
+
+    object-fit:
+        cover;
+}
+
+
+.tp-image-fallback {
+    aspect-ratio:
+        16 / 9;
+
+    place-items:
+        center;
+
+    align-content:
+        center;
+
+    gap: 8px;
+
+    background:
+        #edf5f0;
+
+    color:
+        #137c38;
+}
+
+
+.tp-detail-title {
+    margin:
+        0 0 16px;
+
+    color:
+        #0b1c12;
+
+    font-size:
+        42px;
+
+    letter-spacing:
+        -0.04em;
+}
+
+
+.tp-sport-row {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom:
+        18px;
+}
+
+
+.tp-sport-row span {
+    padding:
+        7px 11px;
+
+    border-radius:
+        999px;
+
+    background:
+        #e7f8ed;
+
+    color:
+        #127d38;
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+}
+
+
+.tp-description {
+    color:
+        #53655a;
+
+    line-height:
+        1.75;
+}
+
+
+.tp-info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            1fr
+        );
+
+    gap: 12px;
+
+    margin-top:
+        24px;
+}
+
+
+.tp-info-grid > div {
+    padding: 16px;
+
+    border:
+        1px solid
+        #e2eae5;
+
+    border-radius:
+        16px;
+
+    background:
+        #f9fbfa;
+}
+
+
+.tp-info-grid small,
+.tp-info-grid strong {
+    display: block;
+}
+
+
+.tp-info-grid small {
+    margin-bottom:
+        6px;
+
+    color:
+        #718077;
+
+    font-size:
+        12px;
+}
+
+
+.tp-info-grid strong {
+    color:
+        #122218;
+
+    line-height:
+        1.45;
+}
+
+
+.tp-detail-extra {
+    margin-top:
+        18px;
+
+    padding:
+        18px;
+
+    border-radius:
+        16px;
+
+    background:
+        #f6faf7;
+}
+
+
+.tp-detail-actions {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top:
+        22px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   BOOKING PANEL
+   ========================================================= */
+
+.tp-booking-panel {
+    position: sticky;
+
+    top: 96px;
+
+    padding: 25px;
+
+    border-color:
+        #164a29;
+
+    background:
+        #061d10;
+
+    color:
+        #ffffff;
+}
+
+
+.tp-booking-panel h2 {
+    margin-top: 0;
+
+    color:
+        #ffffff;
+}
+
+
+.tp-slot-list {
+    display: grid;
+
+    gap: 10px;
+}
+
+
+.tp-slot {
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    gap: 12px;
+
+    padding:
+        14px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.09
+        );
+
+    border-radius:
+        15px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.055
+        );
+}
+
+
+.tp-slot strong,
+.tp-slot span {
+    display: block;
+}
+
+
+.tp-slot span {
+    margin-top:
+        5px;
+
+    color:
+        #aac0b0;
+
+    font-size:
+        12px;
+}
+
+
+.tp-role-note {
+    max-width:
+        135px;
+
+    color:
+        #9db2a3 !important;
+
+    text-align:
+        right;
+}
+
+
+.tp-payment-note {
+    margin-top:
+        20px;
+
+    padding:
+        17px;
+
+    border:
+        1px solid
+        rgba(
+            74,
+            222,
+            128,
+            0.16
+        );
+
+    border-radius:
+        16px;
+
+    background:
+        rgba(
+            34,
+            197,
+            94,
+            0.08
+        );
+}
+
+
+.tp-payment-note p {
+    color:
+        #abc0b1;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.6;
+}
+
+
+/* =========================================================
+   AUTH / LOGIN / PASSWORD RESET
+   ========================================================= */
+
+.tp-auth-section {
+    min-height:
+        calc(
+            100vh - 150px
+        );
+
+    padding:
+        65px 16px;
+
+    display: grid;
+
+    place-items:
+        start center;
+
+    background:
+        #f5f8f6;
+}
+
+
+.tp-auth-card {
+    width:
+        min(
+            520px,
+            100%
+        );
+
+    padding:
+        30px;
+}
+
+
+.tp-auth-card h1 {
+    margin-top: 0;
+
+    color:
+        #102117;
+}
+
+
+.tp-auth-form p {
+    margin:
+        0 0 16px;
+}
+
+
+.tp-auth-form label {
+    display: block;
+
+    margin-bottom:
+        7px;
+
+    color:
+        #24362a;
+
+    font-weight:
+        700;
+}
+
+
+.tp-auth-form input {
+    width: 100%;
+
+    min-height:
+        48px;
+
+    padding:
+        0 13px;
+
+    border:
+        1px solid
+        #d5e0da;
+
+    border-radius:
+        12px;
+
+    outline: none;
+}
+
+
+.tp-auth-links {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    gap: 14px;
+
+    margin-top:
+        18px;
+}
+
+
+.tp-auth-links a {
+    color:
+        #13813a;
+
+    font-size:
+        13px;
+
+    font-weight:
+        750;
+
+    text-decoration:
+        none;
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.tp-message-wrap {
+    padding-top:
+        14px;
+}
+
+
+.tp-message {
+    padding:
+        12px 14px;
+
+    border-radius:
+        12px;
+
+    background:
+        #e7f8ed;
+
+    color:
+        #126c33;
+}
+
+
+.tp-message.error {
+    background:
+        #fdecec;
+
+    color:
+        #a51d1d;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.tp-footer {
+    padding:
+        24px 0;
+
+    background:
+        #03140c;
+
+    color:
+        #849b8c;
+
+    text-align:
+        center;
+
+    font-size:
+        13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (
+    max-width: 950px
+) {
+
+    .tp-nav {
+        padding:
+            11px 0;
+
+        flex-wrap:
+            wrap;
+    }
+
+
+    .tp-nav-links {
+        flex-wrap:
+            wrap;
+    }
+
+
+    .tp-hero-full {
+        min-height:
+            auto;
+    }
+
+
+    .tp-hero-full-grid {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            38px;
+
+        padding-top:
+            72px;
+
+        padding-bottom:
+            72px;
+    }
+
+
+    .tp-hero-booking-card {
+        max-width:
+            650px;
+    }
+
+
+    .tp-home-features {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .tp-detail-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .tp-booking-panel {
+        position:
+            static;
+    }
+
+}
+
+
+@media (
+    max-width: 620px
+) {
+
+    .tp-brand-copy small {
+        display:
+            none;
+    }
+
+
+    .tp-nav-links {
+        gap:
+            12px;
+    }
+
+
+    .tp-hero-full-grid {
+        padding-top:
+            55px;
+
+        padding-bottom:
+            60px;
+    }
+
+
+    .tp-hero-main h1 {
+        font-size:
+            46px;
+    }
+
+
+    .tp-hero-search {
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+    }
+
+
+    .tp-hero-search input {
+        width: 100%;
+    }
+
+
+    .tp-hero-search button {
+        width: 100%;
+    }
+
+
+    .tp-hero-buttons {
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+    }
+
+
+    .tp-hero-buttons .tp-btn {
+        width: 100%;
+    }
+
+
+    .tp-hero-booking-card {
+        padding:
+            23px;
+    }
+
+
+    .tp-info-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .tp-slot {
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+    }
+
+
+    .tp-role-note {
+        max-width:
+            none;
+
+        text-align:
+            left;
+    }
+
+
+    .tp-auth-links {
+        flex-direction:
+            column;
+    }
+
+}
+
+/* TURFPAY HERO IMAGE FINAL OVERRIDE */
+.tp-hero-full {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center 58% !important;
+    color: #ffffff;
+}
+
+.tp-hero-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at 82% 18%,
+            rgba(42, 220, 105, 0.05),
+            transparent 42%
+        );
+}
+
+
+/* =========================================================
+   TURFPAY FINAL READABILITY + HOMEPAGE LAYOUT OVERRIDE
+   ========================================================= */
+
+/* Make the entire website easier to read. */
+body {
+    font-size: 16px !important;
+    line-height: 1.55;
+}
+
+/* Navbar text was too small in the previous version. */
+.tp-nav-links > a,
+.tp-user {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+}
+
+.tp-brand-copy strong {
+    font-size: 23px !important;
+}
+
+.tp-brand-copy small {
+    font-size: 11px !important;
+}
+
+.tp-btn {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+.tp-btn-small {
+    font-size: 13px !important;
+}
+
+/* =========================================================
+   CLEAN FULL IMAGE HERO
+   ========================================================= */
+
+.tp-hero-clean {
+    min-height: calc(100vh - 76px) !important;
+    background-size: cover !important;
+    background-position: center 56% !important;
+    background-repeat: no-repeat !important;
+}
+
+.tp-hero-clean-inner {
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+    padding-top: 72px;
+    padding-bottom: 72px;
+}
+
+.tp-hero-clean .tp-hero-main {
+    width: min(660px, 100%);
+    padding: 34px 0;
+}
+
+.tp-hero-clean .tp-kicker {
+    font-size: 13px !important;
+}
+
+.tp-hero-clean .tp-hero-main h1 {
+    font-size: clamp(58px, 6.4vw, 88px) !important;
+    line-height: 0.98 !important;
+}
+
+.tp-hero-clean .tp-hero-description {
+    max-width: 620px;
+    font-size: 18px !important;
+    line-height: 1.75 !important;
+}
+
+.tp-hero-clean .tp-hero-search {
+    max-width: 650px;
+}
+
+.tp-hero-clean .tp-hero-search input {
+    font-size: 16px !important;
+}
+
+
+/* =========================================================
+   COMBINED BELOW-HERO SECTION
+   ========================================================= */
+
+.tp-home-combined {
+    padding: 72px 0;
+    background:
+        linear-gradient(
+            180deg,
+            #f6f9f7 0%,
+            #eef5f0 100%
+        );
+}
+
+.tp-home-combined-grid {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.05fr)
+        minmax(360px, 0.95fr);
+    gap: 26px;
+    align-items: stretch;
+}
+
+.tp-why-panel,
+.tp-quick-panel {
+    min-height: 100%;
+    border-radius: 26px;
+    box-shadow:
+        0 20px 55px
+        rgba(8, 36, 19, 0.08);
+}
+
+/* LEFT WHITE SECTION */
+.tp-why-panel {
+    padding: 34px;
+    border: 1px solid #dae7df;
+    background: #ffffff;
+}
+
+.tp-why-panel h2 {
+    margin: 0;
+    color: #0b1d12;
+    font-size: clamp(30px, 3vw, 42px);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+}
+
+.tp-panel-intro {
+    max-width: 610px;
+    margin: 15px 0 25px;
+    color: #5a6d60;
+    font-size: 16px;
+    line-height: 1.72;
+}
+
+.tp-mini-feature {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    gap: 15px;
+    padding: 18px 0;
+    border-top: 1px solid #e5ede8;
+}
+
+.tp-mini-feature > span {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: #e7f8ed;
+    color: #12833a;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.tp-mini-feature h3 {
+    margin: 0 0 5px;
+    color: #132219;
+    font-size: 18px;
+}
+
+.tp-mini-feature p {
+    margin: 0;
+    color: #607167;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+
+/* RIGHT GREEN QUICK BOOKING */
+.tp-quick-panel {
+    padding: 34px;
+    border:
+        1px solid
+        rgba(48, 229, 109, 0.22);
+    background:
+        radial-gradient(
+            circle at 92% 5%,
+            rgba(45, 221, 104, 0.13),
+            transparent 32%
+        ),
+        #061d10;
+    color: #ffffff;
+}
+
+.tp-quick-panel .tp-card-heading h2 {
+    margin: 0 0 24px;
+    max-width: 440px;
+    color: #ffffff;
+    font-size: clamp(28px, 3vw, 39px);
+    line-height: 1.18;
+}
+
+.tp-quick-panel .tp-booking-step {
+    grid-template-columns: 48px 1fr;
+    padding: 20px 0;
+}
+
+.tp-quick-panel .tp-step-number {
+    width: 39px;
+    height: 39px;
+    font-size: 12px;
+}
+
+.tp-quick-panel .tp-booking-step strong {
+    font-size: 17px;
+}
+
+.tp-quick-panel .tp-booking-step p {
+    margin-top: 6px;
+    color: #afc3b4;
+    font-size: 15px;
+    line-height: 1.62;
+}
+
+.tp-quick-cta {
+    width: 100%;
+    margin-top: 19px;
+    min-height: 50px;
+}
+
+
+/* =========================================================
+   IMPROVE SMALL TEXT ACROSS OTHER PAGES
+   ========================================================= */
+
+.city-tag,
+.tp-kicker {
+    font-size: 12px !important;
+}
+
+.list-body h3 {
+    font-size: 22px !important;
+}
+
+.list-meta,
+.detail-meta,
+.info-list,
+.muted {
+    font-size: 15px !important;
+}
+
+.sport-tag {
+    font-size: 13px !important;
+}
+
+.price-pill {
+    font-size: 17px !important;
+}
+
+.price-pill span {
+    font-size: 13px !important;
+}
+
+.tp-detail-title {
+    font-size: clamp(34px, 4vw, 48px) !important;
+}
+
+.tp-description {
+    font-size: 16px !important;
+}
+
+.tp-info-grid small {
+    font-size: 13px !important;
+}
+
+.tp-info-grid strong {
+    font-size: 15px !important;
+}
+
+.tp-booking-panel h2 {
+    font-size: 27px !important;
+}
+
+.tp-slot strong {
+    font-size: 15px !important;
+}
+
+.tp-slot span {
+    font-size: 13px !important;
+}
+
+.tp-auth-card h1 {
+    font-size: 34px !important;
+}
+
+.tp-auth-card,
+.tp-auth-form input,
+.tp-auth-links a {
+    font-size: 15px !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 980px) {
+    .tp-home-combined-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tp-hero-clean {
+        min-height: auto !important;
+    }
+
+    .tp-hero-clean-inner {
+        min-height: 680px;
+    }
+
+    .tp-hero-clean .tp-hero-main h1 {
+        font-size: clamp(50px, 10vw, 72px) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .tp-home-combined {
+        padding: 48px 0;
+    }
+
+    .tp-why-panel,
+    .tp-quick-panel {
+        padding: 24px;
+        border-radius: 21px;
+    }
+
+    .tp-hero-clean-inner {
+        min-height: 620px;
+        padding-top: 48px;
+        padding-bottom: 48px;
+    }
+
+    .tp-hero-clean .tp-hero-main h1 {
+        font-size: 47px !important;
+    }
+
+    .tp-hero-clean .tp-hero-description {
+        font-size: 16px !important;
+    }
+
+    .tp-mini-feature {
+        grid-template-columns: 42px 1fr;
+    }
+}
+
+
+/* TURFPAY WHY PANEL DARK MATCH OVERRIDE */
+
+.tp-why-panel {
+    padding: 38px !important;
+
+    border:
+        1px solid
+        rgba(48, 229, 109, 0.22) !important;
+
+    border-radius:
+        26px !important;
+
+    background:
+        radial-gradient(
+            circle at 92% 5%,
+            rgba(45, 221, 104, 0.13),
+            transparent 32%
+        ),
+        #061d10 !important;
+
+    color:
+        #ffffff !important;
+
+    box-shadow:
+        0 20px 55px
+        rgba(8, 36, 19, 0.10) !important;
+}
+
+
+.tp-why-panel .tp-kicker {
+    color:
+        #4ade80 !important;
+
+    font-size:
+        14px !important;
+
+    font-weight:
+        900 !important;
+
+    letter-spacing:
+        0.18em !important;
+}
+
+
+.tp-why-panel h2 {
+    margin:
+        0 !important;
+
+    color:
+        #ffffff !important;
+
+    font-size:
+        clamp(
+            36px,
+            3.5vw,
+            48px
+        ) !important;
+
+    line-height:
+        1.10 !important;
+
+    letter-spacing:
+        -0.04em !important;
+}
+
+
+.tp-why-panel .tp-panel-intro {
+    margin:
+        16px 0 26px !important;
+
+    color:
+        #b4c7ba !important;
+
+    font-size:
+        16px !important;
+
+    line-height:
+        1.72 !important;
+}
+
+
+.tp-why-panel .tp-mini-feature {
+    grid-template-columns:
+        48px 1fr !important;
+
+    gap:
+        16px !important;
+
+    padding:
+        20px 0 !important;
+
+    border-top:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.10
+        ) !important;
+}
+
+
+.tp-why-panel .tp-mini-feature > span {
+    width:
+        40px !important;
+
+    height:
+        40px !important;
+
+    border-radius:
+        11px !important;
+
+    background:
+        rgba(
+            34,
+            197,
+            94,
+            0.14
+        ) !important;
+
+    color:
+        #4ade80 !important;
+
+    font-size:
+        12px !important;
+
+    font-weight:
+        900 !important;
+}
+
+
+.tp-why-panel .tp-mini-feature h3 {
+    margin:
+        0 0 6px !important;
+
+    color:
+        #ffffff !important;
+
+    font-size:
+        18px !important;
+
+    font-weight:
+        800 !important;
+}
+
+
+.tp-why-panel .tp-mini-feature p {
+    margin:
+        0 !important;
+
+    color:
+        #afc3b4 !important;
+
+    font-size:
+        15px !important;
+
+    line-height:
+        1.65 !important;
+}
+
+
+/* Keep both cards visually balanced. */
+.tp-home-combined-grid {
+    align-items:
+        stretch !important;
+}
+
+
+.tp-why-panel,
+.tp-quick-panel {
+    height:
+        100% !important;
+}
+
+
+/* Slightly increase Quick Booking heading too,
+   so both cards feel visually balanced. */
+.tp-quick-panel .tp-card-heading h2 {
+    font-size:
+        clamp(
+            32px,
+            3.2vw,
+            43px
+        ) !important;
+}
+
+
+@media (max-width: 640px) {
+
+    .tp-why-panel {
+        padding:
+            26px !important;
+    }
+
+
+    .tp-why-panel h2 {
+        font-size:
+            34px !important;
+    }
+
+}
+
+
+/* TURFPAY DARK LOWER HOME SECTION */
+
+.tp-home-combined {
+    padding: 72px 0 !important;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(34, 197, 94, 0.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #04140c 0%,
+            #031109 100%
+        ) !important;
+}
+
+
+/* Keep both information cards dark and premium. */
+.tp-why-panel,
+.tp-quick-panel {
+    border:
+        1px solid
+        rgba(74, 222, 128, 0.16) !important;
+
+    background:
+        radial-gradient(
+            circle at 90% 8%,
+            rgba(45, 221, 104, 0.12),
+            transparent 30%
+        ),
+        #061d10 !important;
+
+    box-shadow:
+        0 22px 55px
+        rgba(0, 0, 0, 0.24) !important;
+}
+
+
+/* Why TurfPay text */
+.tp-why-panel h2,
+.tp-why-panel .tp-mini-feature h3 {
+    color: #ffffff !important;
+}
+
+.tp-why-panel .tp-panel-intro,
+.tp-why-panel .tp-mini-feature p {
+    color: #afc3b4 !important;
+}
+
+.tp-why-panel .tp-mini-feature {
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.09) !important;
+}
+
+.tp-why-panel .tp-mini-feature > span {
+    background:
+        rgba(34, 197, 94, 0.14) !important;
+
+    color: #4ade80 !important;
+}
+
+
+/* Keep small labels green on the dark section. */
+.tp-home-combined .tp-kicker,
+.tp-home-combined .tp-kicker-green {
+    color: #4ade80 !important;
+}
+
+
+/* Footer visually joins the dark homepage section. */
+.tp-footer {
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.07) !important;
+
+    background:
+        #020d07 !important;
+}
+
+
+/* Mobile stays dark too. */
+@media (max-width: 640px) {
+    .tp-home-combined {
+        padding: 48px 0 !important;
+    }
+}
+
+
+/* TURFPAY CLEAN DARK TURF DETAIL PAGE */
+
+.tp-turf-page {
+    min-height: calc(100vh - 76px);
+    padding: 42px 0 72px;
+    background:
+        radial-gradient(
+            circle at 15% 5%,
+            rgba(35, 208, 95, 0.08),
+            transparent 30%
+        ),
+        #03140c;
+    color: #ffffff;
+}
+
+.tp-turf-layout {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.1fr)
+        minmax(360px, 0.72fr);
+    gap: 26px;
+    align-items: start;
+}
+
+.tp-turf-main,
+.tp-slot-panel {
+    border:
+        1px solid
+        rgba(74, 222, 128, 0.16);
+    border-radius: 24px;
+    background:
+        rgba(5, 29, 16, 0.92);
+    box-shadow:
+        0 22px 55px
+        rgba(0, 0, 0, 0.24);
+}
+
+.tp-turf-main {
+    padding: 24px;
+}
+
+.tp-turf-photo {
+    overflow: hidden;
+    margin-bottom: 26px;
+    border-radius: 19px;
+    background: #0a2415;
+}
+
+.tp-turf-photo img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.tp-photo-missing {
+    aspect-ratio: 16 / 9;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 8px;
+    color: #4ade80;
+}
+
+.tp-turf-title {
+    margin: 0 0 16px;
+    color: #ffffff;
+    font-size: clamp(36px, 4vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+.tp-sports {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.tp-sports span {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background:
+        rgba(34, 197, 94, 0.14);
+    color: #65ed92;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.tp-turf-description {
+    margin: 0 0 24px;
+    color: #b5c6ba;
+    font-size: 16px;
+    line-height: 1.72;
+}
+
+.tp-turf-info-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.tp-info-box {
+    padding: 17px;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    background:
+        rgba(255, 255, 255, 0.035);
+}
+
+.tp-info-box small,
+.tp-info-box strong {
+    display: block;
+}
+
+.tp-info-box small {
+    margin-bottom: 6px;
+    color: #8fa698;
+    font-size: 13px;
+}
+
+.tp-info-box strong {
+    color: #ffffff;
+    font-size: 15px;
+    line-height: 1.45;
+}
+
+.tp-amenities {
+    margin-top: 18px;
+    padding: 18px;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    background:
+        rgba(255, 255, 255, 0.03);
+}
+
+.tp-amenities h3 {
+    margin: 0 0 8px;
+    color: #ffffff;
+}
+
+.tp-amenities p {
+    margin: 0;
+    color: #aebfb3;
+    line-height: 1.65;
+}
+
+.tp-slot-panel {
+    position: sticky;
+    top: 96px;
+    padding: 26px;
+}
+
+.tp-slot-panel h2 {
+    margin: 0 0 24px;
+    color: #ffffff;
+    font-size: 31px;
+    line-height: 1.15;
+}
+
+.tp-slot-days {
+    display: grid;
+    gap: 22px;
+}
+
+.tp-slot-day h3 {
+    margin: 0 0 12px;
+    color: #ffffff;
+    font-size: 17px;
+}
+
+.tp-slot-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.tp-slot-card {
+    min-height: 92px;
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 11px;
+    border:
+        1px solid
+        rgba(74, 222, 128, 0.20);
+    border-radius: 14px;
+    background:
+        rgba(34, 197, 94, 0.055);
+}
+
+.tp-slot-card strong {
+    display: block;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.tp-slot-card span {
+    display: block;
+    margin-top: 5px;
+    color: #65ed92;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.tp-slot-card form {
+    margin: 0;
+}
+
+.tp-slot-card .tp-btn {
+    width: 100%;
+}
+
+.tp-customer-only {
+    color: #9eb2a4 !important;
+    font-size: 12px !important;
+    line-height: 1.4;
+}
+
+.tp-no-slots {
+    padding: 17px;
+    border-radius: 14px;
+    background:
+        rgba(255, 255, 255, 0.04);
+    color: #aebfb3;
+}
+
+.tp-booking-note {
+    margin-top: 24px;
+    padding: 18px;
+    border:
+        1px solid
+        rgba(74, 222, 128, 0.16);
+    border-radius: 16px;
+    background:
+        rgba(34, 197, 94, 0.07);
+}
+
+.tp-booking-note strong {
+    color: #ffffff;
+}
+
+.tp-booking-note p {
+    margin: 8px 0 0;
+    color: #aac0b1;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+@media (max-width: 950px) {
+    .tp-turf-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .tp-slot-panel {
+        position: static;
+    }
+}
+
+@media (max-width: 620px) {
+    .tp-turf-page {
+        padding-top: 24px;
+    }
+
+    .tp-turf-main,
+    .tp-slot-panel {
+        padding: 18px;
+        border-radius: 20px;
+    }
+
+    .tp-turf-info-grid,
+    .tp-slot-grid {
+        grid-template-columns: 1fr;
+    }
+}

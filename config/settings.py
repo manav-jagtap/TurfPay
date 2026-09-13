@@ -134,3 +134,9 @@ LOGOUT_REDIRECT_URL = "/"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
+# TURFPAY PASSWORD RESET DEMO
+# Local/demo mode: reset links are printed in the runserver terminal.
+DEFAULT_FROM_EMAIL = "noreply@turfpay.local"
+PASSWORD_RESET_TIMEOUT = 3600

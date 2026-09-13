@@ -1,21 +1,22 @@
 {% extends "core/base.html" %}
 
-{% block title %}
-Add Slot | TurfPay
-{% endblock %}
+{% block title %}Add Slot | TurfPay{% endblock %}
 
 {% block content %}
+<section class="page narrow">
+    <a href="{% url 'owner_dashboard' %}" class="back-link">&larr; Back to Dashboard</a>
 
-<section class="turf-list">
-    <h1>Add Slot</h1>
-    <p>{{ turf.name }}</p>
+    <div class="form-card">
+        <span class="eyebrow">SLOT MANAGEMENT</span>
+        <h1>Add Slot</h1>
+        <p>{{ turf.name }}</p>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+        <form method="post" class="styled-form">
+            {% csrf_token %}
+            {{ form.as_p }}
 
-        <button type="submit">Add Slot</button>
-    </form>
+            <button type="submit" class="btn primary full-btn">Add Slot</button>
+        </form>
+    </div>
 </section>
-
 {% endblock %}
