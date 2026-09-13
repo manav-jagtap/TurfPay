@@ -12,7 +12,13 @@
                 {% if turf.image %}
                     <img src="{{ turf.image.url }}" alt="{{ turf.name }}">
                 {% else %}
-                    <div class="tp-photo-missing">
+                    {% static 'core/images/turfs/' as turf_image_base %}
+                    <img
+                        src="{{ turf_image_base }}{{ turf.name|slugify }}.webp"
+                        alt="{{ turf.name }}"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="tp-photo-missing" style="display:none;">
                         <strong>TurfPay</strong>
                         <span>Venue photo unavailable</span>
                     </div>
@@ -75,7 +81,6 @@
                 </div>
             {% endif %}
         </div>
-
 
         <aside class="tp-slot-panel">
             <p class="tp-kicker">Available slots</p>
