@@ -1,71 +1,72 @@
 {% extends "core/base.html" %}
 
-{% block title %}
-Owner Dashboard | TurfPay
-{% endblock %}
+{% block title %}Owner Dashboard | TurfPay{% endblock %}
 
 {% block content %}
+<section class="page">
 
-<section class="turf-list">
-
-    <h1>Owner Dashboard</h1>
-
-    <p>
-        <a href="{% url 'add_turf' %}">
-            Add Turf
-        </a>
-    </p>
-
-    <p>
-        <a href="{% url 'owner_bookings' %}">
-            View Bookings
-        </a>
-    </p>
-
-    {% for turf in turfs %}
-
-        <div class="turf-card">
-
-            <h2>{{ turf.name }}</h2>
-
-            <p>{{ turf.location }}</p>
-
-            <p>
-                {{ turf.get_sport_type_display }}
-            </p>
-
-            <p>
-                ₹{{ turf.price_per_hour }} / hour
-            </p>
-
-            <p>
-                Slots: {{ turf.slots.count }}
-            </p>
-
-            <a href="{% url 'edit_turf' turf.id %}">
-                Edit Turf
-            </a>
-
-            <br><br>
-
-            <a href="{% url 'add_slot' turf.id %}">
-                Add Slot
-            </a>
-
-            <br>
-
-            <a href="{% url 'manage_slots' turf.id %}">
-                Manage Slots
-            </a>
-
+    <div class="dashboard-head">
+        <div>
+            <span class="eyebrow">TURF OWNER</span>
+            <h1>Owner Dashboard</h1>
+            <p>Manage your turf information and playing slots.</p>
         </div>
 
-    {% empty %}
+        <div class="dashboard-buttons">
+            <a href="{% url 'add_turf' %}" class="btn primary">Add Turf</a>
+            <a href="{% url 'owner_bookings' %}" class="btn outline">View Bookings</a>
+        </div>
+    </div>
 
-        <p>No turfs added yet.</p>
+    <div class="owner-grid">
+        {% for turf in turfs %}
+            <article class="owner-card">
+                <div class="owner-card-top">
+                    <span class="location">{{ turf.location }}</span>
 
-    {% endfor %}
+                    {% if turf.is_verified %}
+                        <span class="status">Verified</span>
+                    {% endif %}
+                </div>
+
+                <h2>{{ turf.name }}</h2>
+
+                <div class="chips">
+                    {% for item in turf.sports.all %}
+                        <span>{{ item.name }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="owner-stats">
+                    <div>
+                        <span>PRICE</span>
+                        <strong>
+                            {% if turf.price_per_hour %}
+                                Rs {{ turf.price_per_hour }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>SLOTS</span>
+                        <strong>{{ turf.slots.count }}</strong>
+                    </div>
+                </div>
+
+                <div class="owner-actions">
+                    <a href="{% url 'edit_turf' turf.id %}">Edit Turf</a>
+                    <a href="{% url 'add_slot' turf.id %}">Add Slot</a>
+                    <a href="{% url 'manage_slots' turf.id %}">Manage Slots</a>
+                </div>
+            </article>
+        {% empty %}
+            <div class="empty">
+                <h2>No turf assigned</h2>
+            </div>
+        {% endfor %}
+    </div>
 
 </section>
-
 {% endblock %}

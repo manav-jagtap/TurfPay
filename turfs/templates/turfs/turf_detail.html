@@ -1,63 +1,158 @@
 {% extends "core/base.html" %}
+{% load static %}
 
-{% block title %}
-{{ turf.name }} | TurfPay
-{% endblock %}
+{% block title %}{{ turf.name }} | TurfPay{% endblock %}
 
 {% block content %}
+<section class="tp-turf-page">
+    <div class="tp-container tp-turf-layout">
 
-<section class="turf-detail">
+        <div class="tp-turf-main">
+            <div class="tp-turf-photo">
+                {% if turf.image %}
+                    <img src="{{ turf.image.url }}" alt="{{ turf.name }}">
+                {% else %}
+                    <div class="tp-photo-missing">
+                        <strong>TurfPay</strong>
+                        <span>Venue photo unavailable</span>
+                    </div>
+                {% endif %}
+            </div>
 
-    {% if turf.image %}
-        <img
-            src="{{ turf.image.url }}"
-            alt="{{ turf.name }}"
-            class="turf-detail-image"
-        >
-    {% endif %}
+            <p class="tp-kicker">Turf details</p>
+            <h1 class="tp-turf-title">{{ turf.name }}</h1>
 
-    <h1>{{ turf.name }}</h1>
+            <div class="tp-sports">
+                {% for sport in turf.sports.all %}
+                    <span>{{ sport.name }}</span>
+                {% endfor %}
+            </div>
 
-    <p>{{ turf.location }}</p>
+            <p class="tp-turf-description">
+                {{ turf.description|default:"Sports turf facility in Latur." }}
+            </p>
 
-    <p>
-        Sport: {{ turf.get_sport_type_display }}
-    </p>
+            <div class="tp-turf-info-grid">
+                <div class="tp-info-box">
+                    <small>Location</small>
+                    <strong>{{ turf.location|default:"Latur" }}</strong>
+                </div>
 
-    {% if turf.description %}
-        <p>{{ turf.description }}</p>
-    {% endif %}
+                <div class="tp-info-box">
+                    <small>Address</small>
+                    <strong>{{ turf.full_address|default:turf.location }}</strong>
+                </div>
 
-    <p>₹{{ turf.price_per_hour }} / hour</p>
+                <div class="tp-info-box">
+                    <small>Owner Contact</small>
+                    {% if turf.phone and turf.phone != "0000000000" %}
+                        <strong>{{ turf.phone }}</strong>
+                    {% else %}
+                        <strong>Contact owner for number</strong>
+                    {% endif %}
+                </div>
 
-    <h2>Available Slots</h2>
+                <div class="tp-info-box">
+                    <small>Opening Hours</small>
+                    <strong>{{ turf.opening_hours|default:"Contact owner for timing" }}</strong>
+                </div>
 
-    {% for slot in slots %}
+                <div class="tp-info-box">
+                    <small>Weekday Price</small>
+                    <strong>₹{{ turf.price_per_hour|default:"1000" }} / hour</strong>
+                </div>
 
-        <div class="slot">
+                <div class="tp-info-box">
+                    <small>Weekend Price</small>
+                    <strong>₹{{ turf.price_per_hour|default:"1000"|add:"100" }} / hour</strong>
+                </div>
+            </div>
 
-            <span>
-                {{ slot.date }} |
-                {{ slot.start_time }} - {{ slot.end_time }}
-            </span>
-
-            <form method="post" action="{% url 'book_slot' slot.id %}">
-                {% csrf_token %}
-                <button type="submit">Book Now</button>
-            </form>
-
+            {% if turf.amenities %}
+                <div class="tp-amenities">
+                    <h3>Amenities</h3>
+                    <p>{{ turf.amenities }}</p>
+                </div>
+            {% endif %}
         </div>
 
-    {% empty %}
 
-        <p>No slots available.</p>
+        <aside class="tp-slot-panel">
+            <p class="tp-kicker">Available slots</p>
+            <h2>Choose your playing time</h2>
 
-    {% endfor %}
+            {% regroup slots by date as slot_days %}
 
-    <a href="{% url 'turf_list' %}">
-        ← Back to Turfs
-    </a>
+            <div class="tp-slot-days">
+                {% for day in slot_days %}
+                    <section class="tp-slot-day">
+                        <h3>{{ day.grouper|date:"D, d M Y" }}</h3>
 
+                        <div class="tp-slot-grid">
+                            {% for slot in day.list %}
+                                <div class="tp-slot-card">
+                                    <div>
+                                        <strong>
+                                            {{ slot.start_time|time:"h:i A" }}
+                                            -
+                                            {{ slot.end_time|time:"h:i A" }}
+                                        </strong>
+
+                                        {% if turf.price_per_hour %}
+                                            <span>
+                                                ₹{{ turf.price_per_hour }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+
+                                    {% if user.is_authenticated %}
+                                        {% if user.is_superuser or user.owned_turfs.exists %}
+                                            <span class="tp-customer-only">
+                                                Customer account required
+                                            </span>
+                                        {% else %}
+                                            <form
+                                                method="post"
+                                                action="{% url 'book_slot' slot.id %}"
+                                            >
+                                                {% csrf_token %}
+                                                <button
+                                                    type="submit"
+                                                    class="tp-btn tp-btn-primary tp-btn-small"
+                                                >
+                                                    Book
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    {% else %}
+                                        <a
+                                            href="{% url 'login' %}"
+                                            class="tp-btn tp-btn-primary tp-btn-small"
+                                        >
+                                            Login
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% empty %}
+                    <div class="tp-no-slots">
+                        No future available slots right now.
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="tp-booking-note">
+                <strong>Current booking flow</strong>
+                <p>
+                    Online payment is not added yet.
+                    Book an available slot, check the displayed price
+                    and contact the turf owner if required.
+                </p>
+            </div>
+        </aside>
+
+    </div>
 </section>
-
 {% endblock %}

@@ -1,54 +1,71 @@
 {% extends "core/base.html" %}
+{% load static %}
 
-{% block title %}
-TurfPay | Book Turfs in Latur
-{% endblock %}
+{% block title %}TurfPay | Book Turfs in Latur{% endblock %}
 
 {% block content %}
 
-<section class="hero">
+<!-- ======================================================
+     HERO
+     Only main message is kept over the image so the
+     generated TurfPay turf remains clearly visible.
+     ====================================================== -->
+<section
+    class="tp-hero-full tp-hero-clean"
+    style="
+        background-image:
+        linear-gradient(
+            90deg,
+            rgba(2, 16, 9, 0.68) 0%,
+            rgba(2, 16, 9, 0.34) 52%,
+            rgba(2, 16, 9, 0.08) 100%
+        ),
+        url('{% static "core/images/hero/turfpay-hero.png" %}');
+    "
+>
+    <div class="tp-hero-glow"></div>
 
-    <div class="hero-inner">
+    <div class="tp-container tp-hero-clean-inner">
+        <div class="tp-hero-main">
 
-        <div class="hero-text">
-
-            <span class="hero-badge">
+            <p class="tp-kicker">
                 Turf Booking in Latur
-            </span>
+            </p>
 
             <h1>
-                Find. Book. Play.
-                <span>Your Game Starts Here.</span>
+                Book your game.
+                <br>
+                <span>Own your time.</span>
             </h1>
 
-            <p>
-                Discover turfs across Latur, check available
-                time slots and book your game in minutes.
+            <p class="tp-hero-description">
+                Discover sports turfs across Latur, compare prices,
+                check available slots and book your next game from one place.
             </p>
 
             <form
-                method="get"
                 action="{% url 'turf_list' %}"
-                class="hero-search"
+                method="get"
+                class="tp-hero-search"
             >
-
                 <input
                     type="text"
                     name="q"
                     placeholder="Search turf or location in Latur"
                 >
 
-                <button type="submit">
-                    Search Turfs
+                <button
+                    type="submit"
+                    class="tp-btn tp-btn-primary"
+                >
+                    Find Turfs
                 </button>
-
             </form>
 
-            <div class="hero-actions">
-
+            <div class="tp-hero-buttons">
                 <a
                     href="{% url 'turf_list' %}"
-                    class="btn-primary"
+                    class="tp-btn tp-btn-primary"
                 >
                     Explore Turfs
                 </a>
@@ -56,155 +73,174 @@ TurfPay | Book Turfs in Latur
                 {% if not user.is_authenticated %}
                     <a
                         href="{% url 'register' %}"
-                        class="btn-secondary"
+                        class="tp-btn tp-btn-outline"
                     >
                         Create Account
                     </a>
                 {% endif %}
-
             </div>
 
         </div>
-
-
-        <div class="hero-panel">
-
-            <div class="hero-panel-card">
-
-                <span class="panel-label">
-                    Easy Booking
-                </span>
-
-                <h2>
-                    Book your favourite turf
-                    without calling multiple owners.
-                </h2>
-
-                <div class="feature-row">
-                    <span>01</span>
-                    <div>
-                        <strong>Find Turf</strong>
-                        <p>Search by name or location.</p>
-                    </div>
-                </div>
-
-                <div class="feature-row">
-                    <span>02</span>
-                    <div>
-                        <strong>Choose Slot</strong>
-                        <p>Select an available time.</p>
-                    </div>
-                </div>
-
-                <div class="feature-row">
-                    <span>03</span>
-                    <div>
-                        <strong>Book & Play</strong>
-                        <p>Confirm your booking instantly.</p>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
-
 </section>
 
 
-<section class="home-section">
+<!-- ======================================================
+     HOME INFO SECTION
+     Why TurfPay on one side + Quick Booking on the other.
+     ====================================================== -->
+<section class="tp-home-combined">
 
-    <div class="section-heading">
+    <div class="tp-container tp-home-combined-grid">
 
-        <div>
-            <span class="section-tag">
-                WHY TURFPAY
-            </span>
+        <!-- LEFT: WHY TURFPAY -->
+        <article class="tp-why-panel">
+
+            <p class="tp-kicker tp-kicker-green">
+                Why TurfPay
+            </p>
 
             <h2>
-                Everything you need to find your next game
+                Simple booking for local players.
             </h2>
-        </div>
 
-    </div>
+            <p class="tp-panel-intro">
+                Everything needed to discover, compare and book
+                local sports turfs without calling multiple venues.
+            </p>
 
+            <div class="tp-mini-feature">
 
-    <div class="benefit-grid">
+                <span>01</span>
 
-        <div class="benefit-card">
-            <div class="benefit-icon">
-                01
+                <div>
+                    <h3>Explore local turfs</h3>
+                    <p>
+                        Search Latur venues by turf name,
+                        location and supported sport.
+                    </p>
+                </div>
+
             </div>
 
-            <h3>Turfs Across Latur</h3>
+            <div class="tp-mini-feature">
 
-            <p>
-                Find turf venues across different
-                areas of Latur in one place.
-            </p>
-        </div>
+                <span>02</span>
 
+                <div>
+                    <h3>See available slots</h3>
+                    <p>
+                        View future timings created and
+                        maintained by the respective owner.
+                    </p>
+                </div>
 
-        <div class="benefit-card">
-            <div class="benefit-icon">
-                02
             </div>
 
-            <h3>Live Available Slots</h3>
+            <div class="tp-mini-feature">
 
-            <p>
-                View slots added directly by
-                turf owners before booking.
-            </p>
-        </div>
+                <span>03</span>
 
+                <div>
+                    <h3>Easy booking</h3>
+                    <p>
+                        Customers can book, view and cancel
+                        their bookings from one account.
+                    </p>
+                </div>
 
-        <div class="benefit-card">
-            <div class="benefit-icon">
-                03
             </div>
 
-            <h3>Simple Booking</h3>
+        </article>
 
-            <p>
-                Select your preferred slot and
-                manage bookings from your account.
-            </p>
-        </div>
+
+        <!-- RIGHT: QUICK BOOKING -->
+        <article class="tp-quick-panel">
+
+            <div class="tp-card-heading">
+
+                <div>
+                    <p class="tp-kicker">
+                        Quick Booking
+                    </p>
+
+                    <h2>
+                        From search to game
+                        in three simple steps.
+                    </h2>
+                </div>
+
+                <span class="tp-live-dot"></span>
+
+            </div>
+
+
+            <div class="tp-booking-step">
+
+                <span class="tp-step-number">
+                    01
+                </span>
+
+                <div>
+                    <strong>
+                        Find a turf
+                    </strong>
+
+                    <p>
+                        Explore sports venues available across Latur.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="tp-booking-step">
+
+                <span class="tp-step-number">
+                    02
+                </span>
+
+                <div>
+                    <strong>
+                        Choose a slot
+                    </strong>
+
+                    <p>
+                        Check upcoming owner-managed availability.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="tp-booking-step">
+
+                <span class="tp-step-number">
+                    03
+                </span>
+
+                <div>
+                    <strong>
+                        Book your game
+                    </strong>
+
+                    <p>
+                        Confirm the slot and manage it from TurfPay.
+                    </p>
+                </div>
+
+            </div>
+
+            <a
+                href="{% url 'turf_list' %}"
+                class="tp-btn tp-btn-primary tp-quick-cta"
+            >
+                Explore Available Turfs
+            </a>
+
+        </article>
 
     </div>
-
-</section>
-
-
-<section class="owner-cta">
-
-    <div>
-
-        <span class="section-tag light">
-            FOR TURF OWNERS
-        </span>
-
-        <h2>
-            Manage your turf and bookings with TurfPay.
-        </h2>
-
-        <p>
-            Manage turf information, available slots
-            and customer bookings from one dashboard.
-        </p>
-
-    </div>
-
-    {% if user.is_authenticated and user.owned_turfs.exists %}
-        <a
-            href="{% url 'owner_dashboard' %}"
-            class="owner-cta-btn"
-        >
-            Owner Dashboard
-        </a>
-    {% endif %}
 
 </section>
 

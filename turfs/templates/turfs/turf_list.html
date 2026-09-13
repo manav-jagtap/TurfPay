@@ -1,107 +1,132 @@
 {% extends "core/base.html" %}
+{% load static %}
 
-{% block title %}
-Turfs | TurfPay
-{% endblock %}
+{% block title %}Explore Turfs | TurfPay{% endblock %}
 
 {% block content %}
+<section class="page">
 
-<section class="turf-list">
+    <div class="page-head">
+        <span class="eyebrow">PLAY IN LATUR</span>
+        <h1>Find your next turf</h1>
+        <p>Search local sports venues and choose the right place for your next game.</p>
+    </div>
 
-    <h1>Available Turfs</h1>
-
-    <form method="get" class="search-form">
-
-        <input
-            type="text"
-            name="q"
-            value="{{ query }}"
-            placeholder="Search turf or location"
-        >
-
-        <select name="sport">
-
-            <option value="">
-                All Sports
-            </option>
-
-            <option
-                value="cricket"
-                {% if sport == "cricket" %}selected{% endif %}
+    <form method="get" class="filters">
+        <div class="field grow">
+            <label>Search</label>
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                placeholder="Turf name or location"
             >
-                Cricket
-            </option>
-
-            <option
-                value="football"
-                {% if sport == "football" %}selected{% endif %}
-            >
-                Football
-            </option>
-
-            <option
-                value="multi"
-                {% if sport == "multi" %}selected{% endif %}
-            >
-                Multi-sport
-            </option>
-
-        </select>
-
-        <input
-            type="number"
-            name="max_price"
-            value="{{ max_price }}"
-            placeholder="Max price"
-            min="0"
-        >
-
-        <button type="submit">
-            Search
-        </button>
-
-    </form>
-
-    {% for turf in turfs %}
-
-        <div class="turf-card">
-
-            {% if turf.image %}
-
-                <img
-                    src="{{ turf.image.url }}"
-                    alt="{{ turf.name }}"
-                    class="turf-image"
-                >
-
-            {% endif %}
-
-            <h2>
-                <a href="{% url 'turf_detail' turf.pk %}">
-                    {{ turf.name }}
-                </a>
-            </h2>
-
-            <p>
-                {{ turf.location }}
-            </p>
-
-            <p>
-                {{ turf.get_sport_type_display }}
-            </p>
-
-            <p>
-                ₹{{ turf.price_per_hour }} / hour
-            </p>
-
         </div>
 
-    {% empty %}
+        <div class="field">
+            <label>Sport</label>
+            <select name="sport">
+                <option value="">All Sports</option>
+                {% for item in sports %}
+                    <option
+                        value="{{ item.slug }}"
+                        {% if sport == item.slug %}selected{% endif %}
+                    >
+                        {{ item.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-        <p>No turfs found.</p>
+        <div class="field">
+            <label>Max Price</label>
+            <input
+                type="number"
+                name="max_price"
+                value="{{ max_price }}"
+                min="0"
+                placeholder="Rs / hour"
+            >
+        </div>
 
-    {% endfor %}
+        <button type="submit" class="filter-btn">Search</button>
+    </form>
+
+    <div class="result-row">
+        <span><strong>{{ turfs|length }}</strong> venue{{ turfs|length|pluralize }} found</span>
+
+        {% if query or sport or max_price %}
+            <a href="{% url 'turf_list' %}">Clear filters</a>
+        {% endif %}
+    </div>
+
+    <div class="turf-grid">
+        {% for turf in turfs %}
+            <article class="turf-card">
+
+                <a href="{% url 'turf_detail' turf.id %}" class="turf-media">
+                    {% if turf.image %}
+                        <img src="{{ turf.image.url }}" alt="{{ turf.name }}">
+                    {% else %}
+                        {% static 'core/images/turfs/' as turf_real_base %}
+                        <img
+                            src="{{ turf_real_base }}{{ turf.name|slugify }}.webp"
+                            alt="{{ turf.name }}"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+                        <div class="turf-placeholder" style="display:none;">
+                            <b>TP</b>
+                            <span>Photo unavailable</span>
+                        </div>
+                    {% endif %}
+
+                    {% if turf.is_verified %}
+                        <span class="verified">Verified</span>
+                    {% endif %}
+                </a>
+
+                <div class="turf-body">
+                    <span class="location">{{ turf.location }}</span>
+
+                    <h2>
+                        <a href="{% url 'turf_detail' turf.id %}">
+                            {{ turf.name }}
+                        </a>
+                    </h2>
+
+                    <div class="chips">
+                        {% for item in turf.sports.all %}
+                            <span>{{ item.name }}</span>
+                        {% empty %}
+                            <span class="muted-chip">Sports updating</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="card-bottom">
+                        <div class="price">
+                            {% if turf.price_per_hour %}
+                                <strong>Rs {{ turf.price_per_hour }}</strong>
+                                <small>/ hour</small>
+                            {% else %}
+                                <strong>Contact for price</strong>
+                            {% endif %}
+                        </div>
+
+                        <a href="{% url 'turf_detail' turf.id %}" class="mini-btn">
+                            View Turf
+                        </a>
+                    </div>
+                </div>
+
+            </article>
+        {% empty %}
+            <div class="empty">
+                <h2>No turfs found</h2>
+                <p>Try changing your search or filters.</p>
+                <a href="{% url 'turf_list' %}" class="btn primary">Show All Turfs</a>
+            </div>
+        {% endfor %}
+    </div>
 
 </section>
-
 {% endblock %}

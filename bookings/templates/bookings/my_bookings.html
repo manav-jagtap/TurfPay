@@ -1,55 +1,54 @@
 {% extends "core/base.html" %}
 
-{% block title %}
-My Bookings | TurfPay
-{% endblock %}
+{% block title %}My Bookings | TurfPay{% endblock %}
 
 {% block content %}
+<section class="page narrow">
 
-<section class="turf-list">
+    <div class="page-head">
+        <span class="eyebrow">CUSTOMER</span>
+        <h1>My Bookings</h1>
+        <p>View and manage your TurfPay bookings.</p>
+    </div>
 
-    <h1>My Bookings</h1>
+    <div class="booking-list">
+        {% for booking in bookings %}
+            <article class="booking-card">
+                <div>
+                    <span class="location">{{ booking.slot.turf.location }}</span>
+                    <h2>{{ booking.slot.turf.name }}</h2>
 
-    {% for booking in bookings %}
+                    <div class="booking-meta">
+                        <span>{{ booking.slot.date|date:"D, d M Y" }}</span>
+                        <span>
+                            {{ booking.slot.start_time|time:"g:i A" }}
+                            -
+                            {{ booking.slot.end_time|time:"g:i A" }}
+                        </span>
+                    </div>
+                </div>
 
-        <div class="turf-card">
+                <div class="booking-actions">
+                    <span class="status {% if booking.status == 'cancelled' %}cancelled{% endif %}">
+                        {{ booking.get_status_display }}
+                    </span>
 
-            <h2>{{ booking.slot.turf.name }}</h2>
-
-            <p>{{ booking.slot.date }}</p>
-
-            <p>
-                {{ booking.slot.start_time }}
-                -
-                {{ booking.slot.end_time }}
-            </p>
-
-            <p>
-                Status: {{ booking.get_status_display }}
-            </p>
-
-            {% if booking.status == "confirmed" %}
-
-                <form
-                    method="post"
-                    action="{% url 'cancel_booking' booking.id %}"
-                >
-                    {% csrf_token %}
-                    <button type="submit">
-                        Cancel Booking
-                    </button>
-                </form>
-
-            {% endif %}
-
-        </div>
-
-    {% empty %}
-
-        <p>No bookings yet.</p>
-
-    {% endfor %}
+                    {% if booking.status == "confirmed" %}
+                        <form method="post" action="{% url 'cancel_booking' booking.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="danger-btn">Cancel</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </article>
+        {% empty %}
+            <div class="empty">
+                <h2>No bookings yet</h2>
+                <p>Explore local turfs and book your first game.</p>
+                <a href="{% url 'turf_list' %}" class="btn primary">Explore Turfs</a>
+            </div>
+        {% endfor %}
+    </div>
 
 </section>
-
 {% endblock %}

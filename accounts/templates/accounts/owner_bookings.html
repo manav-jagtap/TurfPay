@@ -1,42 +1,43 @@
 {% extends "core/base.html" %}
 
-{% block title %}
-Owner Bookings | TurfPay
-{% endblock %}
+{% block title %}Owner Bookings | TurfPay{% endblock %}
 
 {% block content %}
+<section class="page narrow">
 
-<section class="turf-list">
+    <div class="page-head">
+        <span class="eyebrow">OWNER</span>
+        <h1>Customer Bookings</h1>
+        <p>Bookings received for your turf.</p>
+    </div>
 
-    <h1>Turf Bookings</h1>
+    <div class="booking-list">
+        {% for booking in bookings %}
+            <article class="booking-card">
+                <div>
+                    <span class="location">{{ booking.slot.turf.name }}</span>
+                    <h2>{{ booking.user.username }}</h2>
 
-    {% for booking in bookings %}
+                    <div class="booking-meta">
+                        <span>{{ booking.slot.date|date:"D, d M Y" }}</span>
+                        <span>
+                            {{ booking.slot.start_time|time:"g:i A" }}
+                            -
+                            {{ booking.slot.end_time|time:"g:i A" }}
+                        </span>
+                    </div>
+                </div>
 
-        <div class="turf-card">
-
-            <h2>{{ booking.slot.turf.name }}</h2>
-
-            <p>Customer: {{ booking.user.username }}</p>
-
-            <p>Date: {{ booking.slot.date }}</p>
-
-            <p>
-                Time:
-                {{ booking.slot.start_time }}
-                -
-                {{ booking.slot.end_time }}
-            </p>
-
-            <p>Status: {{ booking.get_status_display }}</p>
-
-        </div>
-
-    {% empty %}
-
-        <p>No bookings yet.</p>
-
-    {% endfor %}
+                <span class="status {% if booking.status == 'cancelled' %}cancelled{% endif %}">
+                    {{ booking.get_status_display }}
+                </span>
+            </article>
+        {% empty %}
+            <div class="empty">
+                <h2>No bookings received yet</h2>
+            </div>
+        {% endfor %}
+    </div>
 
 </section>
-
 {% endblock %}

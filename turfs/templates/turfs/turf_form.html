@@ -1,25 +1,22 @@
 {% extends "core/base.html" %}
 
-{% block title %}
-{{ title }} | TurfPay
-{% endblock %}
+{% block title %}{{ title }} | TurfPay{% endblock %}
 
 {% block content %}
+<section class="page narrow">
+    <a href="{% url 'owner_dashboard' %}" class="back-link">&larr; Back to Dashboard</a>
 
-<section class="turf-list">
+    <div class="form-card">
+        <span class="eyebrow">TURF OWNER</span>
+        <h1>{{ title }}</h1>
+        <p>Keep the turf information simple and accurate.</p>
 
-    <h1>{{ title }}</h1>
+        <form method="post" enctype="multipart/form-data" class="styled-form">
+            {% csrf_token %}
+            {{ form.as_p }}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <button type="submit">
-            {{ title }}
-        </button>
-    </form>
-
+            <button type="submit" class="btn primary full-btn">Save Turf</button>
+        </form>
+    </div>
 </section>
-
 {% endblock %}
