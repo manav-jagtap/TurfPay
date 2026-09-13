@@ -8,6 +8,7 @@ class Turf(models.Model):
     SPORT_CHOICES = [
         ("cricket", "Cricket"),
         ("football", "Football"),
+        ("pickleball", "Pickleball"),
         ("multi", "Multi-sport"),
     ]
 
@@ -20,7 +21,21 @@ class Turf(models.Model):
     )
 
     name = models.CharField(max_length=120)
-    location = models.CharField(max_length=200)
+
+    # Short locality shown on cards
+    location = models.CharField(
+        max_length=200
+    )
+
+    # Complete real-world address
+    full_address = models.TextField(
+        blank=True
+    )
+
+    phone = models.CharField(
+        max_length=20,
+        blank=True,
+    )
 
     sport_type = models.CharField(
         max_length=20,
@@ -28,7 +43,11 @@ class Turf(models.Model):
         default="multi",
     )
 
-    description = models.TextField(blank=True)
+    description = models.TextField(
+        blank=True
+    )
+
+    # Main / cover image
     image = models.ImageField(
         upload_to="turfs/",
         blank=True,
@@ -37,10 +56,64 @@ class Turf(models.Model):
 
     price_per_hour = models.PositiveIntegerField()
 
-    is_active = models.BooleanField(default=True)
+    opening_hours = models.CharField(
+        max_length=150,
+        blank=True,
+    )
+
+    amenities = models.TextField(
+        blank=True,
+        help_text=(
+            "Example: Floodlights, Parking, "
+            "Changing Room, Drinking Water"
+        ),
+    )
+
+    map_link = models.URLField(
+        blank=True
+    )
+
+    website = models.URLField(
+        blank=True
+    )
+
+    is_verified = models.BooleanField(
+        default=False
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
 
     def __str__(self):
         return self.name
+
+
+class TurfImage(models.Model):
+    turf = models.ForeignKey(
+        Turf,
+        on_delete=models.CASCADE,
+        related_name="gallery_images",
+    )
+
+    image = models.ImageField(
+        upload_to="turfs/gallery/"
+    )
+
+    alt_text = models.CharField(
+        max_length=150,
+        blank=True,
+    )
+
+    order = models.PositiveIntegerField(
+        default=0
+    )
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return f"{self.turf.name} Image"
 
 
 class Slot(models.Model):
@@ -54,7 +127,9 @@ class Slot(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
 
-    is_available = models.BooleanField(default=True)
+    is_available = models.BooleanField(
+        default=True
+    )
 
     class Meta:
         constraints = [
@@ -70,10 +145,15 @@ class Slot(models.Model):
         ]
 
     def clean(self):
-        if self.date and self.date < timezone.localdate():
+        if (
+            self.date
+            and self.date < timezone.localdate()
+        ):
             raise ValidationError(
                 {
-                    "date": "Past dates are not allowed."
+                    "date": (
+                        "Past dates are not allowed."
+                    )
                 }
             )
 
@@ -85,7 +165,8 @@ class Slot(models.Model):
             raise ValidationError(
                 {
                     "end_time": (
-                        "End time must be later than start time."
+                        "End time must be later "
+                        "than start time."
                     )
                 }
             )
