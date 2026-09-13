@@ -4,6 +4,24 @@ from django.db import models
 from django.utils import timezone
 
 
+class Sport(models.Model):
+    name = models.CharField(
+        max_length=50,
+        unique=True,
+    )
+
+    slug = models.SlugField(
+        max_length=50,
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
 class Turf(models.Model):
     SPORT_CHOICES = [
         ("cricket", "Cricket"),
@@ -20,16 +38,16 @@ class Turf(models.Model):
         blank=True,
     )
 
-    name = models.CharField(max_length=120)
-
-    # Short locality shown on cards
-    location = models.CharField(
-        max_length=200
+    name = models.CharField(
+        max_length=120,
     )
 
-    # Complete real-world address
+    location = models.CharField(
+        max_length=200,
+    )
+
     full_address = models.TextField(
-        blank=True
+        blank=True,
     )
 
     phone = models.CharField(
@@ -37,24 +55,33 @@ class Turf(models.Model):
         blank=True,
     )
 
+    sports = models.ManyToManyField(
+        Sport,
+        related_name="turfs",
+        blank=True,
+    )
+
     sport_type = models.CharField(
         max_length=20,
         choices=SPORT_CHOICES,
         default="multi",
+        editable=False,
     )
 
     description = models.TextField(
-        blank=True
+        blank=True,
     )
 
-    # Main / cover image
     image = models.ImageField(
         upload_to="turfs/",
         blank=True,
         null=True,
     )
 
-    price_per_hour = models.PositiveIntegerField()
+    price_per_hour = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
 
     opening_hours = models.CharField(
         max_length=150,
@@ -70,19 +97,19 @@ class Turf(models.Model):
     )
 
     map_link = models.URLField(
-        blank=True
+        blank=True,
     )
 
     website = models.URLField(
-        blank=True
+        blank=True,
     )
 
     is_verified = models.BooleanField(
-        default=False
+        default=False,
     )
 
     is_active = models.BooleanField(
-        default=True
+        default=True,
     )
 
     def __str__(self):
@@ -97,7 +124,7 @@ class TurfImage(models.Model):
     )
 
     image = models.ImageField(
-        upload_to="turfs/gallery/"
+        upload_to="turfs/gallery/",
     )
 
     alt_text = models.CharField(
@@ -106,7 +133,7 @@ class TurfImage(models.Model):
     )
 
     order = models.PositiveIntegerField(
-        default=0
+        default=0,
     )
 
     class Meta:
@@ -124,11 +151,13 @@ class Slot(models.Model):
     )
 
     date = models.DateField()
+
     start_time = models.TimeField()
+
     end_time = models.TimeField()
 
     is_available = models.BooleanField(
-        default=True
+        default=True,
     )
 
     class Meta:

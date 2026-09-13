@@ -12,7 +12,7 @@ class TurfForm(forms.ModelForm):
             "location",
             "full_address",
             "phone",
-            "sport_type",
+            "sports",
             "description",
             "image",
             "price_per_hour",
@@ -23,14 +23,30 @@ class TurfForm(forms.ModelForm):
         ]
 
         widgets = {
+            "sports": forms.CheckboxSelectMultiple(),
+
             "description": forms.Textarea(
-                attrs={"rows": 4}
+                attrs={
+                    "rows": 4,
+                    "placeholder": "Describe the turf",
+                }
             ),
-            "amenities": forms.Textarea(
-                attrs={"rows": 3}
-            ),
+
             "full_address": forms.Textarea(
-                attrs={"rows": 3}
+                attrs={
+                    "rows": 3,
+                    "placeholder": "Enter complete turf address",
+                }
+            ),
+
+            "amenities": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "placeholder": (
+                        "Example: Floodlights, Parking, "
+                        "Changing Room"
+                    ),
+                }
             ),
         }
 
@@ -47,12 +63,20 @@ class SlotForm(forms.ModelForm):
 
         widgets = {
             "date": forms.DateInput(
-                attrs={"type": "date"}
+                attrs={
+                    "type": "date",
+                }
             ),
+
             "start_time": forms.TimeInput(
-                attrs={"type": "time"}
+                attrs={
+                    "type": "time",
+                }
             ),
+
             "end_time": forms.TimeInput(
-                attrs={"type": "time"}
+                attrs={
+                    "type": "time",
+                }
             ),
         }
