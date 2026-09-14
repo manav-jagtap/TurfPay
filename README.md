@@ -1,7 +1,7 @@
 # TurfPay
 ## Live Demo
-
 [Open TurfPay Live](https://turfpay.onrender.com/)
+
 TurfPay is a web-based turf discovery and booking platform built for sports players and turf owners in Latur. It allows customers to explore local turfs, check available slots and manage bookings, while turf owners can manage their venues and customer bookings from a separate dashboard.
 
 ## Project Overview
