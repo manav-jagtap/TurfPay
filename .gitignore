@@ -24,3 +24,5 @@ media/
 *.py[cod]
 _backup*/
 *.zip
+
+staticfiles/
